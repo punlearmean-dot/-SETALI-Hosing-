@@ -1,309 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SETALI-HOSING | Admin</title>
 
-<title>SETALI-HOSING | Owner Panel</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Outfit', sans-serif;
-    background:
-        radial-gradient(circle at 10% 10%, #07517b, transparent 35%),
-        radial-gradient(circle at 90% 90%, #064c70, transparent 40%),
-        #020d19;
-    color: white;
-    min-height: 100vh;
-}
-
-.navbar {
-    padding: 20px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #061b2cdd;
-    backdrop-filter: blur(25px);
-    border-bottom: 1px solid #ffffff20;
-}
-
-.logo {
-    color: #70e3ff;
-    font-size: 21px;
-    font-weight: 900;
-}
-
-.owner {
-    color: #a9dfff;
-    font-size: 13px;
-}
-
-.container {
-    width: 92%;
-    max-width: 1250px;
-    margin: 35px auto;
-}
-
-.heading {
-    margin-bottom: 30px;
-}
-
-.heading h1 {
-    font-size: clamp(27px,5vw,42px);
-}
-
-.heading h1 span {
-    color: #68dfff;
-}
-
-.heading p {
-    color: #a8c9dc;
-    margin-top: 8px;
-}
-
-.glass {
-    background: linear-gradient(
-        135deg,
-        #ffffff17,
-        #ffffff04
-    );
-    border: 1px solid #ffffff20;
-    border-radius: 20px;
-    backdrop-filter: blur(25px);
-    box-shadow: 0 15px 45px #00000030;
-}
-
-.profile {
-    padding: 22px;
-    margin-bottom: 25px;
-}
-
-.profile h3 {
-    color: #70dfff;
-    margin-bottom: 10px;
-}
-
-.profile p {
-    color: #c4e4f5;
-    overflow-wrap: anywhere;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-    gap: 20px;
-}
-
-.card {
-    padding: 25px;
-    transition: .3s;
-}
-
-.card:hover {
-    transform: translateY(-6px);
-    border-color: #65dfff;
-    box-shadow: 0 10px 35px #00aaff25;
-}
-
-.icon {
-    font-size: 35px;
-    margin-bottom: 17px;
-}
-
-.card h3 {
-    margin-bottom: 10px;
-}
-
-.card p {
-    color: #a9c8dc;
-    font-size: 14px;
-    line-height: 1.7;
-}
-
-.panel {
-    margin-top: 25px;
-    padding: 25px;
-}
-
-.panel h2 {
-    margin-bottom: 15px;
-    color: #7de5ff;
-}
-
-.notice {
-    padding: 17px;
-    margin-top: 25px;
-    border: 1px solid #39cfff55;
-    background: #009dff15;
-    border-radius: 13px;
-    color: #bdeaff;
-    line-height: 1.7;
-    font-size: 13px;
-}
-
-button {
-    padding: 11px 18px;
-    border-radius: 10px;
-    border: 1px solid #ffffff30;
-    color: white;
-    background: #ffffff12;
-    font-family: inherit;
-    cursor: pointer;
-}
-
-footer {
-    padding: 35px;
-    text-align: center;
-    color: #789bb0;
-    font-size: 13px;
-}
-
-@media(max-width:600px) {
-    .navbar {
-        padding: 17px 4%;
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
     }
 
-    .logo {
-        font-size: 17px;
+    body {
+      min-height: 100vh;
+      background: #07111f;
+      color: #eaf6ff;
+      padding: 25px;
     }
-}
-</style>
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 35px;
+    }
+
+    h1 {
+      color: #65cfff;
+      font-size: 25px;
+    }
+
+    .badge {
+      background: #123b50;
+      color: #65cfff;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    .card {
+      background: #101f31;
+      border: 1px solid #24445e;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #65cfff;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #b9ccdc;
+      line-height: 1.7;
+    }
+
+    .status {
+      color: #5df0b0;
+      margin-top: 12px;
+    }
+
+    button, .link {
+      display: inline-block;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      margin-top: 15px;
+      background: #168bc4;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    button:hover, .link:hover {
+      background: #0872a7;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 80px;
+      color: #65cfff;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="navbar">
-    <div class="logo">🌊 SETALI-HOSING</div>
-    <div class="owner">👑 OWNER PANEL</div>
-</header>
+  <div id="message">Checking administrator access...</div>
 
-<main class="container">
+  <main class="container hidden" id="adminPanel">
 
-    <div class="heading">
-        <h1>Owner <span>Control Center</span> 👑</h1>
-        <p>Welcome to SETALI-HOSING Administration.</p>
-    </div>
+    <header>
+      <h1>❄ SETALI-HOSING</h1>
+      <span class="badge">ADMIN CONTROL CENTER</span>
+    </header>
 
-    <div class="profile glass">
-        <h3>👤 OWNER ACCOUNT</h3>
-        <p id="ownerEmail">Checking account...</p>
-    </div>
+    <section class="card">
+      <h2>Welcome, Owner!</h2>
+      <p>Account: <span id="adminEmail">Loading...</span></p>
+      <p>Role: <strong>ADMIN</strong></p>
+      <p class="status">● Administrator access verified</p>
+    </section>
 
-    <div class="grid">
+    <section class="card">
+      <h2>Hosting Overview</h2>
+      <p>Server Management: Coming Soon</p>
+      <p>User Management: Coming Soon</p>
+      <p>Resource Management: Coming Soon</p>
+      <p>Hosting Backend: Not Connected</p>
+    </section>
 
-        <div class="card glass">
-            <div class="icon">👥</div>
-            <h3>Users Management</h3>
-            <p>Manage hosting customer accounts.</p>
-        </div>
+    <section class="card">
+      <h2>Owner Controls</h2>
+      <p>
+        This dashboard currently verifies your administrator account.
+        Real server controls will be connected after the hosting backend
+        is installed.
+      </p>
 
-        <div class="card glass">
-            <div class="icon">🖥️</div>
-            <h3>Server Management</h3>
-            <p>View and manage Minecraft servers.</p>
-        </div>
+      <a class="link" href="../dashboard.html">User Dashboard</a>
+      <br>
+      <button id="logoutBtn">Logout</button>
+    </section>
 
-        <div class="card glass">
-            <div class="icon">📊</div>
-            <h3>Resource Monitor</h3>
-            <p>Monitor server CPU, RAM and storage.</p>
-        </div>
+  </main>
 
-        <div class="card glass">
-            <div class="icon">🌐</div>
-            <h3>Node Management</h3>
-            <p>Manage hosting infrastructure nodes.</p>
-        </div>
+  <script type="module">
+    import { supabase } from "../js/supabase-config.js";
 
-        <div class="card glass">
-            <div class="icon">⚙️</div>
-            <h3>Hosting Settings</h3>
-            <p>Configure hosting platform settings.</p>
-        </div>
+    const message = document.getElementById("message");
+    const adminPanel = document.getElementById("adminPanel");
 
-        <div class="card glass">
-            <div class="icon">🔐</div>
-            <h3>Security Center</h3>
-            <p>Manage access and security policies.</p>
-        </div>
+    async function checkAdmin() {
+      const { data: sessionData, error: sessionError } =
+        await supabase.auth.getSession();
 
-    </div>
+      const session = sessionData?.session;
 
-    <div class="panel glass">
-        <h2>🌊 System Status</h2>
-        <p id="systemStatus" style="color:#a9c8dc;line-height:1.8">
-            Checking authentication...
-        </p>
-    </div>
-
-    <div class="notice">
-        ⚠️ ADMIN SECURITY NOTICE<br>
-        This page is currently a visual preview.
-        Owner permissions have not been configured.
-        No user, server or infrastructure management
-        actions are enabled yet.
-    </div>
-
-    <div style="margin-top:25px">
-        <button id="logoutBtn">↪ Logout</button>
-        <a href="../dashboard.html"
-           style="color:#75dcff;text-decoration:none;margin-left:15px">
-           ← User Dashboard
-        </a>
-    </div>
-
-</main>
-
-<footer>
-    🌊 SETALI-HOSING © 2026<br><br>
-    Owner Administration Panel
-</footer>
-
-<script type="module">
-
-import { supabase } from "../js/supabase-config.js";
-
-const emailElement = document.getElementById("ownerEmail");
-const statusElement = document.getElementById("systemStatus");
-
-const { data, error } = await supabase.auth.getSession();
-
-if (error || !data.session) {
-
-    window.location.replace("../login.html");
-
-} else {
-
-    emailElement.textContent = data.session.user.email;
-
-    statusElement.textContent =
-        "Authentication connected. Owner authorization is not configured yet.";
-
-}
-
-document.getElementById("logoutBtn")
-.addEventListener("click", async () => {
-
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-        alert(error.message);
+      if (sessionError || !session) {
+        window.location.href = "../login.html";
         return;
+      }
+
+      const user = session.user;
+
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("email, role")
+        .eq("id", user.id)
+        .single();
+
+      if (error || !profile || profile.role !== "admin") {
+        message.textContent = "Access Denied: Admin permission required.";
+        return;
+      }
+
+      document.getElementById("adminEmail").textContent =
+        profile.email || user.email;
+
+      message.classList.add("hidden");
+      adminPanel.classList.remove("hidden");
     }
 
-    window.location.replace("../login.html");
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "../login.html";
+    });
 
-});
-
-</script>
+    checkAdmin();
+  </script>
 
 </body>
 </html>
