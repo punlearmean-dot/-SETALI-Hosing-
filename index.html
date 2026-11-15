@@ -4,284 +4,659 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SETALI-HOSING | Minecraft Hosting</title>
+<title>SETALI-HOSING | Premium Minecraft Hosting</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
+:root {
+    --blue: #37cfff;
+    --cyan: #7cecff;
+    --dark: #03111f;
+    --glass: rgba(255,255,255,0.075);
+    --border: rgba(255,255,255,0.16);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #061522;
-    color: white;
+html {
+    scroll-behavior: smooth;
 }
 
-header {
-    padding: 22px 7%;
+body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--dark);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* BACKGROUND */
+
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 15% 20%, #07547c 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 25%, #064b73 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 90%, #06365a 0%, transparent 50%),
+        #020c18;
+}
+
+.aurora {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    filter: blur(110px);
+    opacity: .35;
+    animation: aurora 12s infinite alternate ease-in-out;
+}
+
+.a1 {
+    background: #00aaff;
+    top: -350px;
+    left: -200px;
+}
+
+.a2 {
+    background: #00e5ff;
+    bottom: -400px;
+    right: -200px;
+    animation-delay: -5s;
+}
+
+.a3 {
+    background: #245cff;
+    top: 30%;
+    left: 40%;
+    animation-delay: -8s;
+}
+
+@keyframes aurora {
+    from {
+        transform: translate(0,0) scale(1);
+    }
+    to {
+        transform: translate(100px,80px) scale(1.3);
+    }
+}
+
+/* NAVBAR */
+
+nav {
+    width: 100%;
+    padding: 20px 7%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: #091d30;
-    border-bottom: 1px solid #16476a;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(3,17,31,.65);
+    backdrop-filter: blur(25px);
+    border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
 .logo {
     font-size: 23px;
-    font-weight: bold;
-    color: #42c8ff;
+    font-weight: 900;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg,#fff,#53dfff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-nav a {
-    color: #d7efff;
+.nav-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #c5eaff;
     text-decoration: none;
-    margin-left: 20px;
     font-size: 14px;
-}
-
-.hero {
-    text-align: center;
-    padding: 110px 20px;
-    background: linear-gradient(145deg,#061522,#083d60,#061522);
-}
-
-.badge {
-    display: inline-block;
-    padding: 9px 18px;
-    border: 1px solid #35bfff;
-    border-radius: 30px;
-    color: #55ceff;
-    margin-bottom: 25px;
-}
-
-.hero h1 {
-    font-size: 48px;
-    margin-bottom: 20px;
-}
-
-.hero h1 span {
-    color: #42c8ff;
-}
-
-.hero p {
-    color: #b5d8ed;
-    line-height: 1.8;
-}
-
-.buttons {
-    margin-top: 30px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 14px 28px;
-    margin: 7px;
-    border-radius: 9px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.primary {
-    background: #27baff;
-    color: #001827;
-}
-
-.secondary {
-    border: 1px solid #38bfff;
-    color: white;
-}
-
-section {
-    padding: 65px 7%;
-    text-align: center;
-}
-
-section h2 {
-    font-size: 30px;
-    margin-bottom: 15px;
-}
-
-.subtitle {
-    color: #9ec9df;
-    margin-bottom: 35px;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-    gap: 20px;
-}
-
-.card {
-    background: #0c263b;
-    border: 1px solid #174e70;
-    border-radius: 15px;
-    padding: 30px 20px;
     transition: .3s;
 }
 
-.card:hover {
-    transform: translateY(-7px);
-    border-color: #42c8ff;
+.nav-links a:hover {
+    color: white;
+    text-shadow: 0 0 15px #43d8ff;
 }
 
-.card .icon {
-    font-size: 35px;
-    margin-bottom: 18px;
+.nav-buttons {
+    display: flex;
+    gap: 10px;
 }
 
-.card h3 {
-    color: #51caff;
+/* BUTTONS */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 22px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 25px #22cfff66;
+}
+
+.btn-glass {
+    color: white;
+    border: 1px solid var(--border);
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+}
+
+.btn-primary {
+    color: #001725;
+    background: linear-gradient(110deg,#54dfff,#a2f5ff);
+    box-shadow: 0 0 25px #21bfff44;
+}
+
+/* HERO */
+
+.hero {
+    min-height: 650px;
+    padding: 120px 8% 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.badge {
+    padding: 10px 18px;
+    border: 1px solid #65ddff55;
+    border-radius: 50px;
+    background: #16bfff18;
+    color: #9beaff;
+    font-size: 13px;
+    margin-bottom: 28px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 25px #00bfff22;
+}
+
+.hero h1 {
+    font-size: clamp(42px,8vw,85px);
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: -3px;
+    max-width: 950px;
+}
+
+.hero h1 span {
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        #71e4ff,
+        #3aaeff,
+        #ffffff
+    );
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+    to {
+        background-position: 200%;
+    }
+}
+
+.hero p {
+    max-width: 650px;
+    color: #b7d8ed;
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 25px 0 35px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* GLASS PANEL */
+
+.glass-panel {
+    background: linear-gradient(
+        135deg,
+        rgba(255,255,255,.13),
+        rgba(255,255,255,.025)
+    );
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 22px;
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    box-shadow:
+        inset 0 1px 1px rgba(255,255,255,.2),
+        0 15px 50px rgba(0,0,0,.2);
+}
+
+/* STATUS */
+
+.status-box {
+    width: min(90%,650px);
+    padding: 22px;
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.status-item {
+    text-align: center;
+}
+
+.status-item strong {
+    display: block;
+    color: #72e6ff;
+    font-size: 23px;
+    margin-bottom: 5px;
+}
+
+.status-item span {
+    color: #a8c9df;
+    font-size: 12px;
+}
+
+/* SECTION */
+
+section {
+    padding: 90px 8%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-size: clamp(30px,5vw,45px);
+    font-weight: 800;
+}
+
+.section-title h2 span {
+    color: var(--blue);
+}
+
+.section-title p {
+    color: #a9c8dc;
+    margin-top: 12px;
+}
+
+/* FEATURES */
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
+    gap: 22px;
+}
+
+.feature-card {
+    padding: 30px;
+    transition: .35s;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    border-color: #5edfff;
+    box-shadow: 0 15px 40px #00aaff22;
+}
+
+.feature-icon {
+    width: 55px;
+    height: 55px;
+    display: grid;
+    place-items: center;
+    font-size: 27px;
+    border-radius: 16px;
+    background: #25bfff20;
+    border: 1px solid #58dfff44;
+    margin-bottom: 22px;
+}
+
+.feature-card h3 {
+    font-size: 20px;
     margin-bottom: 12px;
 }
 
-.card p {
-    color: #aac9db;
+.feature-card p {
+    color: #a9c8dc;
+    font-size: 14px;
     line-height: 1.7;
 }
 
+/* CTA */
+
 .cta {
-    background: linear-gradient(120deg,#073450,#0878a5);
-    border-radius: 20px;
-    padding: 45px 20px;
+    text-align: center;
+    padding: 60px 25px;
 }
 
+.cta h2 {
+    font-size: clamp(28px,5vw,43px);
+}
+
+.cta p {
+    color: #b5d5e8;
+    margin: 18px auto 28px;
+    max-width: 550px;
+    line-height: 1.7;
+}
+
+/* FOOTER */
+
 footer {
-    text-align: center;
-    padding: 30px;
-    background: #04101a;
-    color: #8db6ca;
-    line-height: 2;
+    padding: 35px 8%;
+    border-top: 1px solid #ffffff15;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    color: #8daec4;
+    font-size: 13px;
+}
+
+footer strong {
+    color: #6cddff;
+}
+
+/* MOBILE */
+
+@media(max-width:750px) {
+
+    nav {
+        padding: 17px 5%;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .btn {
+        padding: 10px 14px;
+        font-size: 12px;
+    }
+
+    .hero {
+        padding-top: 95px;
+        min-height: 600px;
+    }
+
+    .hero h1 {
+        letter-spacing: -1.5px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    section {
+        padding: 70px 6%;
+    }
+
+    .status-box {
+        gap: 25px;
+    }
+
+    footer {
+        justify-content: center;
+        text-align: center;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">🌊 SETALI-HOSING</div>
+<div class="background">
+    <div class="aurora a1"></div>
+    <div class="aurora a2"></div>
+    <div class="aurora a3"></div>
+</div>
 
-    <nav>
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        🌊 SETALI-HOSING
+    </div>
+
+    <div class="nav-links">
         <a href="#home">Home</a>
         <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-    </nav>
-</header>
+        <a href="#about">About</a>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="login.html" class="btn btn-glass">Login</a>
+        <a href="register.html" class="btn btn-primary">Register ↗</a>
+    </div>
+
+</nav>
+
+<!-- HERO -->
 
 <div class="hero" id="home">
 
-    <div class="badge">❄ PREMIUM MINECRAFT HOSTING</div>
+    <div class="badge">
+        ❄️ PREMIUM MINECRAFT HOSTING
+    </div>
 
     <h1>
-        YOUR SERVER,<br>
-        <span>YOUR WORLD.</span>
+        Your World.<br>
+        <span>Your Ocean.</span>
     </h1>
 
     <p>
-        Experience a new generation of Minecraft Hosting.<br>
-        Powerful performance. Beautiful experience.
+        Experience a new generation of Minecraft hosting.
+        Build your world, create your community and explore
+        endless possibilities with SETALI-HOSING. 🌊
     </p>
 
-    <div class="buttons">
-        <a href="#pricing" class="btn primary">
-            Get Started →
+    <div class="hero-buttons">
+
+        <a href="register.html" class="btn btn-primary">
+            🚀 Get Started
         </a>
 
-        <a href="#features" class="btn secondary">
-            Explore Features
+        <a href="login.html" class="btn btn-glass">
+            🔐 Login Account
         </a>
+
+    </div>
+
+    <div class="status-box glass-panel">
+
+        <div class="status-item">
+            <strong>🌊 Ocean</strong>
+            <span>Our Theme</span>
+        </div>
+
+        <div class="status-item">
+            <strong>⚡ Easy</strong>
+            <span>Management</span>
+        </div>
+
+        <div class="status-item">
+            <strong>💎 Premium</strong>
+            <span>Experience</span>
+        </div>
+
     </div>
 
 </div>
 
+<!-- FEATURES -->
+
 <section id="features">
 
-    <h2>Why SETALI-HOSING?</h2>
+    <div class="section-title">
 
-    <p class="subtitle">
-        Powerful tools for your Minecraft world.
-    </p>
+        <h2>
+            Powerful <span>Features</span>
+        </h2>
 
-    <div class="cards">
+        <p>
+            Everything you need to manage your Minecraft world.
+        </p>
 
-        <div class="card">
-            <div class="icon">⚡</div>
-            <h3>24/7 Uptime</h3>
-            <p>Designed for continuous server availability.</p>
+    </div>
+
+    <div class="features">
+
+        <div class="feature-card glass-panel">
+
+            <div class="feature-icon">⚡</div>
+
+            <h3>Easy Control</h3>
+
+            <p>
+                Manage your Minecraft server through
+                a clean and simple dashboard.
+            </p>
+
         </div>
 
-        <div class="card">
-            <div class="icon">🆓</div>
-            <h3>Free Hosting</h3>
-            <p>Explore our free hosting experience.</p>
+        <div class="feature-card glass-panel">
+
+            <div class="feature-icon">🧊</div>
+
+            <h3>Premium Panel</h3>
+
+            <p>
+                Enjoy a modern glass-style control panel
+                with an ocean-inspired interface.
+            </p>
+
         </div>
 
-        <div class="card">
-            <div class="icon">🌊</div>
-            <h3>Fast Network</h3>
-            <p>Built for a smooth Minecraft experience.</p>
+        <div class="feature-card glass-panel">
+
+            <div class="feature-icon">🌍</div>
+
+            <h3>Multiple Software</h3>
+
+            <p>
+                Plan support for Paper, Vanilla,
+                Fabric and other Minecraft software.
+            </p>
+
         </div>
 
-        <div class="card">
-            <div class="icon">🖥️</div>
-            <h3>Server Panel</h3>
-            <p>Manage your Minecraft server from one place.</p>
+        <div class="feature-card glass-panel">
+
+            <div class="feature-icon">🔐</div>
+
+            <h3>Account Security</h3>
+
+            <p>
+                Create your account and manage
+                your hosting profile securely.
+            </p>
+
+        </div>
+
+        <div class="feature-card glass-panel">
+
+            <div class="feature-icon">📊</div>
+
+            <h3>Server Statistics</h3>
+
+            <p>
+                A planned dashboard for viewing
+                server performance and resources.
+            </p>
+
+        </div>
+
+        <div class="feature-card glass-panel">
+
+            <div class="feature-icon">🎮</div>
+
+            <h3>Minecraft Ready</h3>
+
+            <p>
+                Prepare your own Minecraft world
+                and build your community.
+            </p>
+
         </div>
 
     </div>
 
 </section>
 
-<section id="pricing">
+<!-- ABOUT -->
 
-    <h2>Choose Your Hosting</h2>
+<section id="about">
 
-    <p class="subtitle">
-        Find the right plan for your Minecraft adventure.
-    </p>
+    <div class="cta glass-panel">
 
-    <div class="cards">
+        <h2>
+            🌊 Enter The <span style="color:#65ddff">
+            SETALI World
+            </span>
+        </h2>
 
-        <div class="card">
-            <div class="icon">🧊</div>
-            <h3>FREE PLAN</h3>
-            <p>Free Minecraft Hosting</p>
-            <br>
-            <h2>$0.00</h2>
-            <p>Coming Soon</p>
-        </div>
+        <p>
+            Your adventure starts here.
+            Create an account and discover
+            the future of Minecraft hosting.
+        </p>
 
-        <div class="card">
-            <div class="icon">💎</div>
-            <h3>PREMIUM PLAN</h3>
-            <p>Premium Minecraft Hosting</p>
-            <br>
-            <h2>Coming Soon</h2>
-            <p>More Power. More Freedom.</p>
-        </div>
-
-    </div>
-
-</section>
-
-<section>
-    <div class="cta">
-        <h2>Ready to Build Your World?</h2>
-        <p>Join the SETALI-HOSING community.</p>
-        <br>
-        <a href="#home" class="btn primary">
-            Explore Now →
+        <a href="register.html" class="btn btn-primary">
+            💎 Create Free Account
         </a>
+
     </div>
+
 </section>
+
+<!-- FOOTER -->
 
 <footer>
-    <h3>🌊 SETALI-HOSING 🧊</h3>
-    <p>Premium Minecraft Hosting</p>
-    <p>© 2026 SETALI-HOSING. All Rights Reserved.</p>
+
+    <div>
+        <strong>🌊 SETALI-HOSING</strong>
+        <br>
+        Your World. Your Ocean.
+    </div>
+
+    <div>
+        © 2026 SETALI-HOSING. All Rights Reserved.
+    </div>
+
 </footer>
 
 </body>
-  </html>
+</html>
