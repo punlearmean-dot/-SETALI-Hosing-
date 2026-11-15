@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SETALI-HOSING | Register</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #061629, #063b61, #087ca7);
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.card {
+    width: 90%;
+    max-width: 400px;
+    padding: 35px 25px;
+    border: 1px solid #39c8ff55;
+    border-radius: 20px;
+    background: #071d32ee;
+    box-shadow: 0 0 35px #00aaff33;
+}
+
+h1 {
+    text-align: center;
+    color: #43caff;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #a9c8dc;
+    margin-bottom: 30px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin: 9px 0;
+    border: 1px solid #27658a;
+    border-radius: 10px;
+    background: #102d46;
+    color: white;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #0099ff, #42d5ff);
+    color: #001b30;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+button:disabled {
+    opacity: 0.6;
+}
+
+.message {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+a {
+    color: #43caff;
+    text-decoration: none;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 22px;
+    color: #a9c8dc;
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>🌊 SETALI-HOSING</h1>
+<p class="subtitle">Create your hosting account</p>
+
+<form id="registerForm">
+
+<input
+    type="email"
+    id="email"
+    placeholder="Email Address"
+    required
+>
+
+<input
+    type="password"
+    id="password"
+    placeholder="Password (minimum 8 characters)"
+    minlength="8"
+    required
+>
+
+<input
+    type="password"
+    id="confirmPassword"
+    placeholder="Confirm Password"
+    minlength="8"
+    required
+>
+
+<button type="submit" id="registerBtn">
+CREATE ACCOUNT
+</button>
+
+</form>
+
+<div class="message" id="message"></div>
+
+<div class="footer">
+Already have an account?
+<a href="login.html">Login</a>
+</div>
+
+</div>
+
+<script type="module">
+
+import { supabase } from "./js/supabase-config.js";
+
+const form = document.getElementById("registerForm");
+const message = document.getElementById("message");
+const button = document.getElementById("registerBtn");
+
+form.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (password !== confirmPassword) {
+        message.textContent = "Passwords do not match!";
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "CREATING ACCOUNT...";
+    message.textContent = "";
+
+    try {
+
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password
+        });
+
+        if (error) throw error;
+
+        message.textContent =
+            "Registration successful! Check your email to verify your account.";
+
+        form.reset();
+
+    } catch (error) {
+
+        message.textContent = error.message;
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "CREATE ACCOUNT";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
