@@ -1,189 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SETALI-HOSING | Admin</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SETALI-HOSING | Admin</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
 
-    body {
-      min-height: 100vh;
-      background: #07111f;
-      color: #eaf6ff;
-      padding: 25px;
-    }
+body {
+  background: #07111f;
+  color: #eaf6ff;
+  padding: 20px;
+}
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-    }
+.container {
+  max-width: 1000px;
+  margin: auto;
+}
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      margin-bottom: 35px;
-    }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
 
-    h1 {
-      color: #65cfff;
-      font-size: 25px;
-    }
+h1, h2 {
+  color: #65cfff;
+}
 
-    .badge {
-      background: #123b50;
-      color: #65cfff;
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-    }
+.card {
+  background: #101f31;
+  border: 1px solid #24445e;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
 
-    .card {
-      background: #101f31;
-      border: 1px solid #24445e;
-      border-radius: 18px;
-      padding: 25px;
-      margin-bottom: 20px;
-    }
+.stat {
+  font-size: 35px;
+  font-weight: bold;
+  color: #65cfff;
+  margin-top: 12px;
+}
 
-    h2 {
-      color: #65cfff;
-      margin-bottom: 15px;
-    }
+.badge {
+  background: #123b50;
+  color: #65cfff;
+  padding: 8px 13px;
+  border-radius: 20px;
+}
 
-    p {
-      color: #b9ccdc;
-      line-height: 1.7;
-    }
+button {
+  background: #168bc4;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 18px;
+  cursor: pointer;
+  margin-top: 15px;
+}
 
-    .status {
-      color: #5df0b0;
-      margin-top: 12px;
-    }
+button:hover {
+  background: #0872a7;
+}
 
-    button, .link {
-      display: inline-block;
-      border: none;
-      border-radius: 10px;
-      padding: 12px 18px;
-      margin-top: 15px;
-      background: #168bc4;
-      color: white;
-      font-weight: bold;
-      text-decoration: none;
-      cursor: pointer;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  min-width: 500px;
+}
 
-    button:hover, .link:hover {
-      background: #0872a7;
-    }
+th, td {
+  padding: 13px;
+  border-bottom: 1px solid #24445e;
+  text-align: left;
+  font-size: 13px;
+}
 
-    #message {
-      text-align: center;
-      margin-top: 80px;
-      color: #65cfff;
-    }
+th {
+  color: #65cfff;
+}
 
-    .hidden {
-      display: none;
-    }
-  </style>
+.table-wrap {
+  overflow-x: auto;
+}
+
+.role {
+  color: #65f0b0;
+  font-weight: bold;
+}
+
+.admin {
+  color: #d9a5ff;
+  font-weight: bold;
+}
+
+#message {
+  text-align: center;
+  margin-top: 100px;
+  color: #65cfff;
+}
+
+.hidden {
+  display: none;
+}
+
+</style>
 </head>
 
 <body>
 
-  <div id="message">Checking administrator access...</div>
+<div id="message">Checking administrator access...</div>
 
-  <main class="container hidden" id="adminPanel">
+<main class="container hidden" id="adminPanel">
 
-    <header>
-      <h1>❄ SETALI-HOSING</h1>
-      <span class="badge">ADMIN CONTROL CENTER</span>
-    </header>
+<header>
+  <h1>❄ SETALI-HOSING</h1>
+  <span class="badge">ADMIN CONTROL CENTER</span>
+</header>
 
-    <section class="card">
-      <h2>Welcome, Owner!</h2>
-      <p>Account: <span id="adminEmail">Loading...</span></p>
-      <p>Role: <strong>ADMIN</strong></p>
-      <p class="status">● Administrator access verified</p>
-    </section>
+<section class="card">
+  <h2>Welcome, Owner!</h2>
+  <p id="adminEmail" style="margin-top:12px"></p>
+  <p style="color:#5df0b0;margin-top:8px">
+    ● Administrator access verified
+  </p>
+</section>
 
-    <section class="card">
-      <h2>Hosting Overview</h2>
-      <p>Server Management: Coming Soon</p>
-      <p>User Management: Coming Soon</p>
-      <p>Resource Management: Coming Soon</p>
-      <p>Hosting Backend: Not Connected</p>
-    </section>
+<section class="card">
+  <h2>👥 Total Users</h2>
+  <div class="stat" id="totalUsers">0</div>
+  <p>Registered accounts</p>
+</section>
 
-    <section class="card">
-      <h2>Owner Controls</h2>
-      <p>
-        This dashboard currently verifies your administrator account.
-        Real server controls will be connected after the hosting backend
-        is installed.
-      </p>
+<section class="card">
+  <h2>👤 User Management</h2>
 
-      <a class="link" href="../dashboard.html">User Dashboard</a>
-      <br>
-      <button id="logoutBtn">Logout</button>
-    </section>
+  <button id="refreshBtn">Refresh Users</button>
 
-  </main>
+  <p id="userMessage" style="margin-top:12px">
+    Loading users...
+  </p>
 
-  <script type="module">
-    import { supabase } from "../js/supabase-config.js";
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody id="usersTable"></tbody>
+    </table>
+  </div>
+</section>
 
-    const message = document.getElementById("message");
-    const adminPanel = document.getElementById("adminPanel");
+<section class="card">
+  <h2>Server Management</h2>
+  <p>Hosting Backend: Not Connected</p>
+  <p>Server Controls: Coming Soon</p>
+  <p>Resource Management: Coming Soon</p>
+</section>
 
-    async function checkAdmin() {
-      const { data: sessionData, error: sessionError } =
-        await supabase.auth.getSession();
+<section class="card">
+  <h2>Owner Controls</h2>
+  <button id="logoutBtn">Logout</button>
+</section>
 
-      const session = sessionData?.session;
+</main>
 
-      if (sessionError || !session) {
-        window.location.href = "../login.html";
-        return;
-      }
+<script type="module">
+import { supabase } from "../js/supabase-config.js";
 
-      const user = session.user;
+const message = document.getElementById("message");
+const adminPanel = document.getElementById("adminPanel");
 
-      const { data: profile, error } = await supabase
-        .from("profiles")
-        .select("email, role")
-        .eq("id", user.id)
-        .single();
+async function loadUsers() {
+  const userMessage = document.getElementById("userMessage");
+  const table = document.getElementById("usersTable");
 
-      if (error || !profile || profile.role !== "admin") {
-        message.textContent = "Access Denied: Admin permission required.";
-        return;
-      }
+  userMessage.textContent = "Loading users...";
+  table.innerHTML = "";
 
-      document.getElementById("adminEmail").textContent =
-        profile.email || user.email;
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("email, role, created_at")
+    .order("created_at", { ascending: false });
 
-      message.classList.add("hidden");
-      adminPanel.classList.remove("hidden");
-    }
+  if (error) {
+    userMessage.textContent = "Error loading users: " + error.message;
+    return;
+  }
 
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      await supabase.auth.signOut();
-      window.location.href = "../login.html";
-    });
+  document.getElementById("totalUsers").textContent = data.length;
 
-    checkAdmin();
-  </script>
+  if (data.length === 0) {
+    userMessage.textContent = "No users found.";
+    return;
+  }
+
+  userMessage.textContent = "Users loaded successfully.";
+
+  data.forEach(user => {
+    const row = document.createElement("tr");
+
+    const emailCell = document.createElement("td");
+    emailCell.textContent = user.email || "No email";
+
+    const roleCell = document.createElement("td");
+    roleCell.textContent = user.role || "user";
+    roleCell.className =
+      user.role === "admin" ? "admin" : "role";
+
+    const dateCell = document.createElement("td");
+    dateCell.textContent = user.created_at
+      ? new Date(user.created_at).toLocaleDateString()
+      : "-";
+
+    row.append(emailCell, roleCell, dateCell);
+    table.appendChild(row);
+  });
+}
+
+async function checkAdmin() {
+  const { data, error } = await supabase.auth.getSession();
+  const session = data?.session;
+
+  if (error || !session) {
+    window.location.href = "../login.html";
+    return;
+  }
+
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("email, role")
+    .eq("id", session.user.id)
+    .single();
+
+  if (profileError || !profile || profile.role !== "admin") {
+    message.textContent = "Access Denied: Admin permission required.";
+    return;
+  }
+
+  document.getElementById("adminEmail").textContent =
+    "Account: " + (profile.email || session.user.email);
+
+  message.classList.add("hidden");
+  adminPanel.classList.remove("hidden");
+
+  await loadUsers();
+}
+
+document.getElementById("refreshBtn").addEventListener(
+  "click", loadUsers
+);
+
+document.getElementById("logoutBtn").addEventListener(
+  "click", async () => {
+    await supabase.auth.signOut();
+    window.location.href = "../login.html";
+  }
+);
+
+checkAdmin();
+</script>
 
 </body>
 </html>
