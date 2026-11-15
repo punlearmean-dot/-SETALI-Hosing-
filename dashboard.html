@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>SETALI-HOSING | Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 * {
@@ -13,156 +16,191 @@
 }
 
 body {
-    background: #061522;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 10% 10%, #07517b, transparent 35%),
+        radial-gradient(circle at 90% 80%, #064c70, transparent 40%),
+        #020d19;
+    font-family: 'Outfit', sans-serif;
     color: white;
-    font-family: Arial, sans-serif;
 }
 
-header {
-    background: #091d30;
-    padding: 20px;
-    border-bottom: 1px solid #17618a;
+body::before {
+    content: "";
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: #00bfff;
+    opacity: .13;
+    filter: blur(120px);
+    top: -200px;
+    right: -100px;
+    z-index: -1;
+}
+
+.navbar {
+    padding: 20px 6%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: #061b2cbb;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid #ffffff18;
 }
 
 .logo {
-    color: #42c8ff;
-    font-size: 21px;
-    font-weight: bold;
+    font-size: 22px;
+    font-weight: 900;
+    color: #76e6ff;
 }
 
-header a {
-    color: #54caff;
-    text-decoration: none;
+.logout {
+    padding: 11px 18px;
+    border: 1px solid #ffffff30;
+    background: #ffffff0c;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 .container {
-    padding: 25px;
-    max-width: 1100px;
-    margin: auto;
+    width: 90%;
+    max-width: 1200px;
+    margin: 45px auto;
 }
 
 .welcome {
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .welcome h1 {
-    font-size: 27px;
-    margin-bottom: 10px;
+    font-size: clamp(28px,5vw,42px);
+}
+
+.welcome h1 span {
+    color: #65dcff;
 }
 
 .welcome p {
-    color: #91b8d0;
+    color: #9bbdd1;
+    margin-top: 10px;
 }
 
-.server {
-    background: linear-gradient(135deg,#0b3550,#0b2035);
-    padding: 25px;
-    border: 1px solid #17618a;
-    border-radius: 16px;
-    margin-bottom: 25px;
+.glass {
+    background: linear-gradient(
+        135deg,
+        #ffffff16,
+        #ffffff04
+    );
+    border: 1px solid #ffffff20;
+    border-radius: 20px;
+    backdrop-filter: blur(25px);
+    box-shadow: 0 15px 45px #00000030;
 }
 
-.server h2 {
-    color: #50caff;
-    margin-bottom: 15px;
+.account {
+    padding: 22px;
+    margin-bottom: 30px;
 }
 
-.status {
-    color: #ffcf65;
-    margin-bottom: 20px;
+.account h3 {
+    color: #73ddff;
+    margin-bottom: 10px;
 }
 
-.buttons {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+.account p {
+    color: #c6e8fa;
+    overflow-wrap: anywhere;
 }
 
-button {
-    padding: 12px 19px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.start {
-    background: #22c982;
-    color: #001b10;
-}
-
-.stop {
-    background: #ff5964;
-    color: white;
-}
-
-.restart {
-    background: #35baff;
-    color: #001827;
-}
-
-.cards {
+.grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
-    gap: 18px;
-    margin-bottom: 25px;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 20px;
 }
 
 .card {
-    background: #0b263b;
-    border: 1px solid #164c6b;
-    border-radius: 13px;
-    padding: 22px;
+    padding: 25px;
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    border-color: #5bdfff;
+    box-shadow: 0 10px 35px #00aaff22;
+}
+
+.icon {
+    font-size: 35px;
+    margin-bottom: 18px;
 }
 
 .card h3 {
-    color: #65cfff;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #a9c8dc;
     font-size: 14px;
-    margin-bottom: 14px;
+    line-height: 1.7;
 }
 
-.value {
-    font-size: 25px;
-    font-weight: bold;
+.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    background: linear-gradient(100deg,#32bfff,#8cecff);
+    color: #001827;
+    font-weight: 800;
 }
 
-.console {
-    background: #020b12;
-    border: 1px solid #155073;
-    padding: 20px;
-    border-radius: 13px;
+.server-section {
+    margin-top: 35px;
+    padding: 25px;
 }
 
-.console h2 {
-    color: #50caff;
+.server-section h2 {
     margin-bottom: 15px;
 }
 
-#logs {
-    height: 180px;
-    overflow-y: auto;
-    color: #6cebb4;
-    font-family: monospace;
+.empty {
+    padding: 35px 10px;
+    text-align: center;
+    color: #a9c8dc;
+    line-height: 2;
+}
+
+.notice {
+    margin-top: 25px;
+    padding: 15px;
+    border-radius: 12px;
+    background: #009dff12;
+    border: 1px solid #38caff35;
+    color: #a9dfff;
     font-size: 13px;
-    line-height: 1.8;
+    line-height: 1.7;
 }
 
 footer {
     text-align: center;
-    padding: 30px;
-    color: #75a7c0;
+    padding: 35px;
+    color: #7798ae;
+    font-size: 13px;
 }
 
-@media(max-width:500px) {
-    .container {
-        padding: 16px;
+@media(max-width:600px) {
+    .navbar {
+        padding: 17px 5%;
     }
 
-    .welcome h1 {
-        font-size: 23px;
+    .logo {
+        font-size: 17px;
+    }
+
+    .container {
+        margin-top: 30px;
     }
 }
 </style>
@@ -170,149 +208,167 @@ footer {
 
 <body>
 
-<header>
+<header class="navbar">
+
     <div class="logo">🌊 SETALI-HOSING</div>
-    <a href="index.html">← Home</a>
+
+    <button class="logout" id="logoutBtn">
+        ↪ Logout
+    </button>
+
 </header>
 
-<div class="container">
+<main class="container">
 
     <div class="welcome">
-        <h1>Welcome to Dashboard 🧊</h1>
-        <p>Manage your Minecraft server.</p>
-    </div>
 
-    <div class="server">
+        <h1>
+            Welcome Back, <span>Explorer!</span> 💎
+        </h1>
 
-        <h2>🖥️ My Minecraft Server</h2>
-
-        <div class="status">
-            Status: <span id="status">OFFLINE</span>
-        </div>
-
-        <div class="buttons">
-            <button class="start" onclick="startServer()">
-                ▶ START
-            </button>
-
-            <button class="stop" onclick="stopServer()">
-                ■ STOP
-            </button>
-
-            <button class="restart" onclick="restartServer()">
-                ↻ RESTART
-            </button>
-        </div>
+        <p>
+            Your personal Minecraft hosting control center.
+        </p>
 
     </div>
 
-    <div class="cards">
+    <div class="account glass">
 
-        <div class="card">
-            <h3>🧠 RAM USAGE</h3>
-            <div class="value">0 MB</div>
+        <h3>👤 YOUR ACCOUNT</h3>
+
+        <p id="userEmail">Loading account...</p>
+
+    </div>
+
+    <div class="grid">
+
+        <div class="card glass">
+
+            <div class="icon">🖥️</div>
+
+            <h3>My Servers</h3>
+
+            <p>
+                View and manage your Minecraft servers.
+            </p>
+
+            <a href="#servers" class="button">
+                View Servers
+            </a>
+
         </div>
 
-        <div class="card">
-            <h3>⚡ CPU USAGE</h3>
-            <div class="value">0%</div>
+        <div class="card glass">
+
+            <div class="icon">🚀</div>
+
+            <h3>Create Server</h3>
+
+            <p>
+                Prepare your own Minecraft server.
+            </p>
+
+            <a href="create-server.html" class="button">
+                Create Server
+            </a>
+
         </div>
 
-        <div class="card">
-            <h3>👥 PLAYERS</h3>
-            <div class="value">0 / 20</div>
-        </div>
+        <div class="card glass">
 
-        <div class="card">
-            <h3>🌐 SERVER STATUS</h3>
-            <div class="value" id="online">Offline</div>
+            <div class="icon">⚙️</div>
+
+            <h3>Account Settings</h3>
+
+            <p>
+                Your account information and access.
+            </p>
+
+            <a href="#account" class="button">
+                My Account
+            </a>
+
         </div>
 
     </div>
 
-    <div class="console">
+    <div class="server-section glass" id="servers">
 
-        <h2>📟 Server Console</h2>
+        <h2>🌊 My Minecraft Servers</h2>
 
-        <div id="logs">
-            [SETALI] Welcome to SETALI-HOSING!<br>
-            [SYSTEM] Demo Dashboard initialized.<br>
-            [SERVER] Waiting for server...
+        <div class="empty">
+
+            <div style="font-size:45px">🧊</div>
+
+            <h3>No Servers Yet</h3>
+
+            <p>
+                Your server list will appear here
+                after a real server has been created.
+            </p>
+
+            <a href="create-server.html" class="button">
+                + Create Your First Server
+            </a>
+
         </div>
 
     </div>
 
-</div>
+    <div class="notice">
+        💎 SETALI-HOSING ACCOUNT SYSTEM<br>
+        Your account is connected to Supabase Authentication.
+        Minecraft server provisioning and real server controls
+        are not connected yet.
+    </div>
+
+</main>
 
 <footer>
-    🌊 SETALI-HOSING 🧊<br>
-    Premium Minecraft Hosting<br>
-    © 2026 SETALI-HOSING
+    🌊 SETALI-HOSING © 2026
+    <br><br>
+    Your World. Your Ocean.
 </footer>
 
-<script>
+<script type="module">
 
-let running = false;
+import { supabase } from "./js/supabase-config.js";
 
-function log(message) {
-    let logs = document.getElementById("logs");
+// CHECK LOGIN SESSION
 
-    logs.innerHTML += "<br>[SETALI] " + message;
+const { data, error } = await supabase.auth.getSession();
 
-    logs.scrollTop = logs.scrollHeight;
+if (error || !data.session) {
+    window.location.replace("login.html");
+} else {
+    document.getElementById("userEmail").textContent =
+        data.session.user.email;
 }
 
-function startServer() {
+// LOGOUT
 
-    if(running) {
-        log("Server is already running.");
+document.getElementById("logoutBtn")
+.addEventListener("click", async () => {
+
+    const button = document.getElementById("logoutBtn");
+
+    button.disabled = true;
+    button.textContent = "Logging out...";
+
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+        alert("Logout failed: " + error.message);
+        button.disabled = false;
+        button.textContent = "↪ Logout";
         return;
     }
 
-    running = true;
+    window.location.replace("login.html");
 
-    document.getElementById("status").innerText = "ONLINE";
-    document.getElementById("online").innerText = "Online";
-
-    log("Server started (DEMO MODE).");
-}
-
-function stopServer() {
-
-    if(!running) {
-        log("Server is already offline.");
-        return;
-    }
-
-    running = false;
-
-    document.getElementById("status").innerText = "OFFLINE";
-    document.getElementById("online").innerText = "Offline";
-
-    log("Server stopped (DEMO MODE).");
-}
-
-function restartServer() {
-
-    log("Restart requested...");
-
-    running = false;
-
-    document.getElementById("status").innerText = "OFFLINE";
-    document.getElementById("online").innerText = "Offline";
-
-    setTimeout(() => {
-        running = true;
-
-        document.getElementById("status").innerText = "ONLINE";
-        document.getElementById("online").innerText = "Online";
-
-        log("Server restarted (DEMO MODE).");
-
-    }, 1500);
-}
+});
 
 </script>
 
 </body>
-  </html>
+</html>
