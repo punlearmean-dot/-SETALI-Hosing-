@@ -8,19 +8,18 @@
 <style>
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
   font-family: Arial, sans-serif;
 }
 
 body {
+  margin: 0;
+  padding: 20px;
   background: #07111f;
   color: #eaf6ff;
-  padding: 20px;
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: auto;
 }
 
@@ -30,7 +29,7 @@ header {
   align-items: center;
   flex-wrap: wrap;
   gap: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 h1, h2 {
@@ -47,41 +46,47 @@ h1, h2 {
 
 .stat {
   font-size: 35px;
-  font-weight: bold;
   color: #65cfff;
+  font-weight: bold;
   margin-top: 12px;
 }
 
-.badge {
-  background: #123b50;
-  color: #65cfff;
-  padding: 8px 13px;
-  border-radius: 20px;
-}
-
 button {
-  background: #168bc4;
+  border: 0;
+  border-radius: 8px;
+  padding: 10px 14px;
   color: white;
-  border: none;
-  border-radius: 9px;
-  padding: 12px 18px;
+  background: #168bc4;
   cursor: pointer;
-  margin-top: 15px;
+  margin: 4px;
 }
 
-button:hover {
-  background: #0872a7;
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.approve {
+  background: #087e58;
+}
+
+.reject {
+  background: #a9364c;
+}
+
+.table-wrap {
+  overflow-x: auto;
 }
 
 table {
   width: 100%;
+  min-width: 650px;
   border-collapse: collapse;
   margin-top: 15px;
-  min-width: 500px;
 }
 
-th, td {
-  padding: 13px;
+td, th {
+  padding: 12px;
   border-bottom: 1px solid #24445e;
   text-align: left;
   font-size: 13px;
@@ -91,18 +96,23 @@ th {
   color: #65cfff;
 }
 
-.table-wrap {
-  overflow-x: auto;
+.badge {
+  background: #123b50;
+  color: #65cfff;
+  padding: 8px 12px;
+  border-radius: 20px;
 }
 
-.role {
-  color: #65f0b0;
-  font-weight: bold;
+.status-pending {
+  color: #ffd36a;
 }
 
-.admin {
-  color: #d9a5ff;
-  font-weight: bold;
+.status-approved {
+  color: #5df0b0;
+}
+
+.status-rejected {
+  color: #ff8585;
 }
 
 #message {
@@ -115,6 +125,11 @@ th {
   display: none;
 }
 
+#notice {
+  color: #a9c1d5;
+  line-height: 1.6;
+  margin-top: 12px;
+}
 </style>
 </head>
 
@@ -131,8 +146,8 @@ th {
 
 <section class="card">
   <h2>Welcome, Owner!</h2>
-  <p id="adminEmail" style="margin-top:12px"></p>
-  <p style="color:#5df0b0;margin-top:8px">
+  <p id="adminEmail"></p>
+  <p style="color:#5df0b0;margin-top:10px">
     ● Administrator access verified
   </p>
 </section>
@@ -140,17 +155,13 @@ th {
 <section class="card">
   <h2>👥 Total Users</h2>
   <div class="stat" id="totalUsers">0</div>
-  <p>Registered accounts</p>
 </section>
 
 <section class="card">
   <h2>👤 User Management</h2>
 
-  <button id="refreshBtn">Refresh Users</button>
-
-  <p id="userMessage" style="margin-top:12px">
-    Loading users...
-  </p>
+  <button id="refreshUsers">Refresh Users</button>
+  <p id="userMessage">Loading...</p>
 
   <div class="table-wrap">
     <table>
@@ -167,14 +178,43 @@ th {
 </section>
 
 <section class="card">
-  <h2>Server Management</h2>
-  <p>Hosting Backend: Not Connected</p>
-  <p>Server Controls: Coming Soon</p>
-  <p>Resource Management: Coming Soon</p>
+  <h2>🖥️ Server Requests</h2>
+
+  <button id="refreshRequests">Refresh Requests</button>
+  <p id="requestMessage">Loading requests...</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Server Name</th>
+          <th>Owner</th>
+          <th>Version</th>
+          <th>Software</th>
+          <th>RAM</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody id="requestsTable"></tbody>
+    </table>
+  </div>
+
+  <p id="notice">
+    Approved means the request is accepted. It does not
+    automatically create a running Minecraft server yet.
+  </p>
 </section>
 
 <section class="card">
-  <h2>Owner Controls</h2>
+  <h2>Hosting Infrastructure</h2>
+  <p>Backend: Not Connected</p>
+  <p>Minecraft Server Nodes: Not Connected</p>
+  <p>Pterodactyl Panel: Not Connected</p>
+</section>
+
+<section class="card">
   <button id="logoutBtn">Logout</button>
 </section>
 
@@ -184,14 +224,54 @@ th {
 import { supabase } from "../js/supabase-config.js";
 
 const message = document.getElementById("message");
-const adminPanel = document.getElementById("adminPanel");
+const panel = document.getElementById("adminPanel");
+
+let isAdmin = false;
+
+async function checkAdmin() {
+  const { data, error } = await supabase.auth.getSession();
+
+  if (error || !data.session) {
+    window.location.href = "../login.html";
+    return;
+  }
+
+  const user = data.session.user;
+
+  const { data: profile, error: profileError } =
+    await supabase
+      .from("profiles")
+      .select("email, role")
+      .eq("id", user.id)
+      .single();
+
+  if (profileError || !profile || profile.role !== "admin") {
+    message.textContent = "Access Denied: Admin permission required.";
+    return;
+  }
+
+  isAdmin = true;
+
+  document.getElementById("adminEmail").textContent =
+    "Account: " + (profile.email || user.email);
+
+  message.classList.add("hidden");
+  panel.classList.remove("hidden");
+
+  await Promise.all([
+    loadUsers(),
+    loadRequests()
+  ]);
+}
 
 async function loadUsers() {
-  const userMessage = document.getElementById("userMessage");
-  const table = document.getElementById("usersTable");
+  if (!isAdmin) return;
 
-  userMessage.textContent = "Loading users...";
-  table.innerHTML = "";
+  const output = document.getElementById("usersTable");
+  const status = document.getElementById("userMessage");
+
+  status.textContent = "Loading users...";
+  output.replaceChildren();
 
   const { data, error } = await supabase
     .from("profiles")
@@ -199,79 +279,168 @@ async function loadUsers() {
     .order("created_at", { ascending: false });
 
   if (error) {
-    userMessage.textContent = "Error loading users: " + error.message;
+    status.textContent = error.message;
     return;
   }
 
   document.getElementById("totalUsers").textContent = data.length;
 
-  if (data.length === 0) {
-    userMessage.textContent = "No users found.";
-    return;
-  }
-
-  userMessage.textContent = "Users loaded successfully.";
-
   data.forEach(user => {
     const row = document.createElement("tr");
 
-    const emailCell = document.createElement("td");
-    emailCell.textContent = user.email || "No email";
+    const email = document.createElement("td");
+    email.textContent = user.email || "No email";
 
-    const roleCell = document.createElement("td");
-    roleCell.textContent = user.role || "user";
-    roleCell.className =
-      user.role === "admin" ? "admin" : "role";
+    const role = document.createElement("td");
+    role.textContent = user.role;
 
-    const dateCell = document.createElement("td");
-    dateCell.textContent = user.created_at
+    const date = document.createElement("td");
+    date.textContent = user.created_at
       ? new Date(user.created_at).toLocaleDateString()
       : "-";
 
-    row.append(emailCell, roleCell, dateCell);
-    table.appendChild(row);
+    row.append(email, role, date);
+    output.appendChild(row);
   });
+
+  status.textContent = data.length + " users loaded.";
 }
 
-async function checkAdmin() {
-  const { data, error } = await supabase.auth.getSession();
-  const session = data?.session;
+async function loadRequests() {
+  if (!isAdmin) return;
 
-  if (error || !session) {
-    window.location.href = "../login.html";
+  const output = document.getElementById("requestsTable");
+  const status = document.getElementById("requestMessage");
+
+  status.textContent = "Loading requests...";
+  output.replaceChildren();
+
+  const { data: requests, error } = await supabase
+    .from("server_requests")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    status.textContent = error.message;
     return;
   }
 
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("email, role")
-    .eq("id", session.user.id)
-    .single();
+  const { data: profiles, error: profileError } =
+    await supabase
+      .from("profiles")
+      .select("id, email");
 
-  if (profileError || !profile || profile.role !== "admin") {
-    message.textContent = "Access Denied: Admin permission required.";
+  if (profileError) {
+    status.textContent = profileError.message;
     return;
   }
 
-  document.getElementById("adminEmail").textContent =
-    "Account: " + (profile.email || session.user.email);
+  const emailMap = new Map(
+    profiles.map(profile => [profile.id, profile.email])
+  );
 
-  message.classList.add("hidden");
-  adminPanel.classList.remove("hidden");
+  if (!requests.length) {
+    status.textContent = "No server requests yet.";
+    return;
+  }
 
-  await loadUsers();
+  requests.forEach(request => {
+    const row = document.createElement("tr");
+
+    const name = document.createElement("td");
+    name.textContent = request.server_name;
+
+    const owner = document.createElement("td");
+    owner.textContent =
+      emailMap.get(request.user_id) || "Unknown";
+
+    const version = document.createElement("td");
+    version.textContent = request.minecraft_version;
+
+    const software = document.createElement("td");
+    software.textContent = request.software;
+
+    const ram = document.createElement("td");
+    ram.textContent = (request.ram_mb / 1024) + " GB";
+
+    const statusCell = document.createElement("td");
+    statusCell.textContent = request.status;
+    statusCell.className = "status-" + request.status;
+
+    const actions = document.createElement("td");
+
+    if (request.status === "pending") {
+      const approve = document.createElement("button");
+      approve.textContent = "Approve";
+      approve.className = "approve";
+
+      approve.addEventListener("click", () =>
+        updateRequest(request.id, "approved")
+      );
+
+      const reject = document.createElement("button");
+      reject.textContent = "Reject";
+      reject.className = "reject";
+
+      reject.addEventListener("click", () =>
+        updateRequest(request.id, "rejected")
+      );
+
+      actions.append(approve, reject);
+    } else {
+      actions.textContent = "No actions";
+    }
+
+    row.append(
+      name,
+      owner,
+      version,
+      software,
+      ram,
+      statusCell,
+      actions
+    );
+
+    output.appendChild(row);
+  });
+
+  status.textContent = requests.length + " requests loaded.";
 }
 
-document.getElementById("refreshBtn").addEventListener(
-  "click", loadUsers
-);
+async function updateRequest(id, newStatus) {
+  if (!isAdmin) return;
 
-document.getElementById("logoutBtn").addEventListener(
-  "click", async () => {
+  const confirmed = confirm(
+    "Change this server request to " + newStatus + "?"
+  );
+
+  if (!confirmed) return;
+
+  const { error } = await supabase
+    .from("server_requests")
+    .update({ status: newStatus })
+    .eq("id", id);
+
+  if (error) {
+    alert("Update failed: " + error.message);
+    return;
+  }
+
+  alert("Request updated successfully!");
+  await loadRequests();
+}
+
+document.getElementById("refreshUsers")
+  .addEventListener("click", loadUsers);
+
+document.getElementById("refreshRequests")
+  .addEventListener("click", loadRequests);
+
+document.getElementById("logoutBtn")
+  .addEventListener("click", async () => {
     await supabase.auth.signOut();
     window.location.href = "../login.html";
-  }
-);
+  });
 
 checkAdmin();
 </script>
