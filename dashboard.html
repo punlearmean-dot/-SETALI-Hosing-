@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SETALI-HOSING | Dashboard</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #061522;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background: #091d30;
+    padding: 20px;
+    border-bottom: 1px solid #17618a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #42c8ff;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+header a {
+    color: #54caff;
+    text-decoration: none;
+}
+
+.container {
+    padding: 25px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.welcome {
+    margin-bottom: 30px;
+}
+
+.welcome h1 {
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+
+.welcome p {
+    color: #91b8d0;
+}
+
+.server {
+    background: linear-gradient(135deg,#0b3550,#0b2035);
+    padding: 25px;
+    border: 1px solid #17618a;
+    border-radius: 16px;
+    margin-bottom: 25px;
+}
+
+.server h2 {
+    color: #50caff;
+    margin-bottom: 15px;
+}
+
+.status {
+    color: #ffcf65;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 12px 19px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.start {
+    background: #22c982;
+    color: #001b10;
+}
+
+.stop {
+    background: #ff5964;
+    color: white;
+}
+
+.restart {
+    background: #35baff;
+    color: #001827;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: #0b263b;
+    border: 1px solid #164c6b;
+    border-radius: 13px;
+    padding: 22px;
+}
+
+.card h3 {
+    color: #65cfff;
+    font-size: 14px;
+    margin-bottom: 14px;
+}
+
+.value {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.console {
+    background: #020b12;
+    border: 1px solid #155073;
+    padding: 20px;
+    border-radius: 13px;
+}
+
+.console h2 {
+    color: #50caff;
+    margin-bottom: 15px;
+}
+
+#logs {
+    height: 180px;
+    overflow-y: auto;
+    color: #6cebb4;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #75a7c0;
+}
+
+@media(max-width:500px) {
+    .container {
+        padding: 16px;
+    }
+
+    .welcome h1 {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🌊 SETALI-HOSING</div>
+    <a href="index.html">← Home</a>
+</header>
+
+<div class="container">
+
+    <div class="welcome">
+        <h1>Welcome to Dashboard 🧊</h1>
+        <p>Manage your Minecraft server.</p>
+    </div>
+
+    <div class="server">
+
+        <h2>🖥️ My Minecraft Server</h2>
+
+        <div class="status">
+            Status: <span id="status">OFFLINE</span>
+        </div>
+
+        <div class="buttons">
+            <button class="start" onclick="startServer()">
+                ▶ START
+            </button>
+
+            <button class="stop" onclick="stopServer()">
+                ■ STOP
+            </button>
+
+            <button class="restart" onclick="restartServer()">
+                ↻ RESTART
+            </button>
+        </div>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>🧠 RAM USAGE</h3>
+            <div class="value">0 MB</div>
+        </div>
+
+        <div class="card">
+            <h3>⚡ CPU USAGE</h3>
+            <div class="value">0%</div>
+        </div>
+
+        <div class="card">
+            <h3>👥 PLAYERS</h3>
+            <div class="value">0 / 20</div>
+        </div>
+
+        <div class="card">
+            <h3>🌐 SERVER STATUS</h3>
+            <div class="value" id="online">Offline</div>
+        </div>
+
+    </div>
+
+    <div class="console">
+
+        <h2>📟 Server Console</h2>
+
+        <div id="logs">
+            [SETALI] Welcome to SETALI-HOSING!<br>
+            [SYSTEM] Demo Dashboard initialized.<br>
+            [SERVER] Waiting for server...
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    🌊 SETALI-HOSING 🧊<br>
+    Premium Minecraft Hosting<br>
+    © 2026 SETALI-HOSING
+</footer>
+
+<script>
+
+let running = false;
+
+function log(message) {
+    let logs = document.getElementById("logs");
+
+    logs.innerHTML += "<br>[SETALI] " + message;
+
+    logs.scrollTop = logs.scrollHeight;
+}
+
+function startServer() {
+
+    if(running) {
+        log("Server is already running.");
+        return;
+    }
+
+    running = true;
+
+    document.getElementById("status").innerText = "ONLINE";
+    document.getElementById("online").innerText = "Online";
+
+    log("Server started (DEMO MODE).");
+}
+
+function stopServer() {
+
+    if(!running) {
+        log("Server is already offline.");
+        return;
+    }
+
+    running = false;
+
+    document.getElementById("status").innerText = "OFFLINE";
+    document.getElementById("online").innerText = "Offline";
+
+    log("Server stopped (DEMO MODE).");
+}
+
+function restartServer() {
+
+    log("Restart requested...");
+
+    running = false;
+
+    document.getElementById("status").innerText = "OFFLINE";
+    document.getElementById("online").innerText = "Offline";
+
+    setTimeout(() => {
+        running = true;
+
+        document.getElementById("status").innerText = "ONLINE";
+        document.getElementById("online").innerText = "Online";
+
+        log("Server restarted (DEMO MODE).");
+
+    }, 1500);
+}
+
+</script>
+
+</body>
+  </html>
