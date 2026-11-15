@@ -1,2 +1,2 @@
-# -SETALI-Hosing-
-Premium Minecraft Hosting 🌊❄️💎✨
+# SETALI-Hosing
+Premium Minecraft Hosting 🌊❄️
