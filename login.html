@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SETALI-HOSING | Login</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #061629, #063b61, #087ca7);
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.card {
+    width: 90%;
+    max-width: 400px;
+    padding: 35px 25px;
+    border: 1px solid #39c8ff55;
+    border-radius: 20px;
+    background: #071d32ee;
+    box-shadow: 0 0 35px #00aaff33;
+}
+
+h1 {
+    text-align: center;
+    color: #43caff;
+}
+
+.subtitle {
+    text-align: center;
+    color: #a9c8dc;
+    margin-bottom: 30px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border: 1px solid #27658a;
+    border-radius: 10px;
+    background: #102d46;
+    color: white;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #0099ff, #42d5ff);
+    color: #001b30;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.6;
+}
+
+.message {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+a {
+    color: #43caff;
+    text-decoration: none;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 22px;
+    color: #a9c8dc;
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>🌊 SETALI-HOSING</h1>
+
+    <p class="subtitle">Welcome Back!</p>
+
+    <form id="loginForm">
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Email Address"
+            required
+        >
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+        >
+
+        <button type="submit" id="loginBtn">
+            LOGIN
+        </button>
+
+    </form>
+
+    <div class="message" id="message"></div>
+
+    <div class="footer">
+        Don't have an account?
+        <a href="register.html">Register</a>
+    </div>
+
+</div>
+
+<script type="module">
+
+import { supabase } from "./js/supabase-config.js";
+
+const form = document.getElementById("loginForm");
+const message = document.getElementById("message");
+const button = document.getElementById("loginBtn");
+
+form.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    const email = document
+        .getElementById("email")
+        .value.trim();
+
+    const password = document
+        .getElementById("password")
+        .value;
+
+    button.disabled = true;
+    button.textContent = "LOGGING IN...";
+    message.textContent = "";
+
+    try {
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) throw error;
+
+        message.textContent = "Login successful!";
+
+        window.location.href = "dashboard.html";
+
+    } catch (error) {
+
+        message.textContent = error.message;
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "LOGIN";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
