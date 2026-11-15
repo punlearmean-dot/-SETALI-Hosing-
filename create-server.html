@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SETALI-HOSING | Create Server</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #061522;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    padding: 20px;
+    background: #091d30;
+    border-bottom: 1px solid #17618a;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    color: #42c8ff;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+a {
+    color: #50caff;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 650px;
+    margin: 45px auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #50caff;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #9ec9df;
+    margin-bottom: 30px;
+}
+
+.form {
+    background: #0b263b;
+    padding: 25px;
+    border: 1px solid #17618a;
+    border-radius: 16px;
+}
+
+label {
+    display: block;
+    margin: 20px 0 9px;
+    color: #69d0ff;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid #17618a;
+    background: #061522;
+    color: white;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 28px;
+    background: linear-gradient(90deg,#159bd8,#40d5ff);
+    color: #001827;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: .85;
+}
+
+#result {
+    display: none;
+    margin-top: 20px;
+    padding: 18px;
+    background: #092f42;
+    border: 1px solid #42c8ff;
+    border-radius: 10px;
+    line-height: 1.8;
+}
+
+.note {
+    color: #8eb9d0;
+    font-size: 12px;
+    margin-top: 18px;
+    line-height: 1.7;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #75a7c0;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🌊 SETALI-HOSING</div>
+    <a href="dashboard.html">Dashboard →</a>
+</header>
+
+<div class="container">
+
+    <h1>❄ Create Your Server</h1>
+
+    <p class="subtitle">
+        Build your Minecraft world with SETALI-HOSING.
+    </p>
+
+    <div class="form">
+
+        <form id="serverForm">
+
+            <label>Server Name</label>
+            <input
+                type="text"
+                id="serverName"
+                placeholder="My Minecraft Server"
+                maxlength="30"
+                required
+            >
+
+            <label>Minecraft Version</label>
+
+            <select id="version">
+                <option value="1.21.11">1.21.11</option>
+                <option value="1.21.10">1.21.10</option>
+                <option value="1.21.8">1.21.8</option>
+            </select>
+
+            <label>Server Software</label>
+
+            <select id="software">
+                <option>Paper</option>
+                <option>Vanilla</option>
+                <option>Fabric</option>
+                <option>Purpur</option>
+            </select>
+
+            <label>RAM Allocation</label>
+
+            <select id="ram">
+                <option value="1">1 GB</option>
+                <option value="2">2 GB</option>
+                <option value="4">4 GB</option>
+            </select>
+
+            <label>Server Edition</label>
+
+            <select>
+                <option>Java Edition</option>
+            </select>
+
+            <button type="submit">
+                🚀 CREATE SERVER
+            </button>
+
+        </form>
+
+        <div id="result"></div>
+
+        <p class="note">
+            ⚠️ Preview Mode: This form does not create a
+            real Minecraft server yet. A hosting backend
+            is required for real server creation.
+        </p>
+
+    </div>
+
+</div>
+
+<footer>
+    🌊 SETALI-HOSING 🧊<br>
+    Premium Minecraft Hosting
+</footer>
+
+<script>
+
+document.getElementById("serverForm")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const name = document.getElementById("serverName").value;
+    const version = document.getElementById("version").value;
+    const software = document.getElementById("software").value;
+    const ram = document.getElementById("ram").value;
+
+    const result = document.getElementById("result");
+
+    result.style.display = "block";
+
+    result.innerHTML = `
+        <h3>❄ Server Configuration Saved (DEMO)</h3>
+        <p>Server Name: ${escapeHTML(name)}</p>
+        <p>Version: ${version}</p>
+        <p>Software: ${software}</p>
+        <p>RAM: ${ram} GB</p>
+        <br>
+        <strong style="color:#50caff">
+        Waiting for Hosting Backend...
+        </strong>
+    `;
+
+});
+
+function escapeHTML(text) {
+    return text.replace(/[&<>"']/g, function(char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+    });
+}
+
+</script>
+
+</body>
+</html>
