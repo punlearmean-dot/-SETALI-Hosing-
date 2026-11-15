@@ -3,247 +3,367 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SETALI-HOSING | Create Server</title>
+<title>Create Server | SETALI-HOSING</title>
 
 <style>
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
 body {
-    background: #061522;
-    color: white;
-    font-family: Arial, sans-serif;
-}
-
-header {
-    padding: 20px;
-    background: #091d30;
-    border-bottom: 1px solid #17618a;
-    display: flex;
-    justify-content: space-between;
-}
-
-.logo {
-    color: #42c8ff;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-a {
-    color: #50caff;
-    text-decoration: none;
+  background: #07111f;
+  color: #eaf6ff;
+  padding: 20px;
 }
 
 .container {
-    max-width: 650px;
-    margin: 45px auto;
-    padding: 20px;
+  max-width: 650px;
+  margin: 30px auto;
 }
 
 h1 {
-    text-align: center;
-    color: #50caff;
-    margin-bottom: 12px;
+  color: #65cfff;
+  margin-bottom: 10px;
 }
 
 .subtitle {
-    text-align: center;
-    color: #9ec9df;
-    margin-bottom: 30px;
+  color: #9bb4c9;
+  margin-bottom: 25px;
 }
 
-.form {
-    background: #0b263b;
-    padding: 25px;
-    border: 1px solid #17618a;
-    border-radius: 16px;
+.card {
+  background: #101f31;
+  border: 1px solid #24445e;
+  border-radius: 18px;
+  padding: 24px;
 }
 
 label {
-    display: block;
-    margin: 20px 0 9px;
-    color: #69d0ff;
+  display: block;
+  margin: 18px 0 8px;
+  color: #aee5ff;
+  font-weight: bold;
 }
 
 input, select {
-    width: 100%;
-    padding: 14px;
-    border-radius: 8px;
-    border: 1px solid #17618a;
-    background: #061522;
-    color: white;
-    outline: none;
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #31536d;
+  border-radius: 10px;
+  background: #091827;
+  color: white;
+  outline: none;
+}
+
+input:focus, select:focus {
+  border-color: #65cfff;
 }
 
 button {
-    width: 100%;
-    padding: 15px;
-    margin-top: 28px;
-    background: linear-gradient(90deg,#159bd8,#40d5ff);
-    color: #001827;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 9px;
-    cursor: pointer;
+  width: 100%;
+  padding: 14px;
+  margin-top: 22px;
+  border: none;
+  border-radius: 10px;
+  background: #168bc4;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
 }
 
-button:hover {
-    opacity: .85;
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-#result {
-    display: none;
-    margin-top: 20px;
-    padding: 18px;
-    background: #092f42;
-    border: 1px solid #42c8ff;
-    border-radius: 10px;
-    line-height: 1.8;
+.info {
+  color: #8faec4;
+  font-size: 13px;
+  margin-top: 9px;
 }
 
-.note {
-    color: #8eb9d0;
-    font-size: 12px;
-    margin-top: 18px;
-    line-height: 1.7;
+#message {
+  margin-top: 18px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
-footer {
-    text-align: center;
-    padding: 30px;
-    color: #75a7c0;
+.success {
+  color: #5df0b0;
+}
+
+.error {
+  color: #ff8585;
+}
+
+.back {
+  display: inline-block;
+  color: #65cfff;
+  margin-top: 20px;
+  text-decoration: none;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">🌊 SETALI-HOSING</div>
-    <a href="dashboard.html">Dashboard →</a>
-</header>
-
 <div class="container">
 
-    <h1>❄ Create Your Server</h1>
+  <h1>❄ SETALI-HOSING</h1>
+  <p class="subtitle">Create your Minecraft Java Server</p>
 
-    <p class="subtitle">
-        Build your Minecraft world with SETALI-HOSING.
-    </p>
+  <div class="card">
 
-    <div class="form">
+    <form id="serverForm">
 
-        <form id="serverForm">
+      <label>Server Name</label>
+      <input
+        type="text"
+        id="serverName"
+        minlength="3"
+        maxlength="32"
+        placeholder="My Minecraft Server"
+        required
+      >
 
-            <label>Server Name</label>
-            <input
-                type="text"
-                id="serverName"
-                placeholder="My Minecraft Server"
-                maxlength="30"
-                required
-            >
+      <label>Server Software</label>
+      <select id="software">
+        <option value="Paper">Paper</option>
+        <option value="Vanilla">Vanilla</option>
+        <option value="Fabric">Fabric</option>
+        <option value="Forge">Forge</option>
+        <option value="NeoForge">NeoForge</option>
+        <option value="Purpur">Purpur</option>
+      </select>
 
-            <label>Minecraft Version</label>
+      <label>Minecraft Version Type</label>
+      <select id="versionType">
+        <option value="release">Release</option>
+        <option value="snapshot">Snapshot</option>
+        <option value="old_beta">Old Beta</option>
+        <option value="old_alpha">Old Alpha</option>
+        <option value="all">All Versions</option>
+      </select>
 
-            <select id="version">
-                <option value="1.21.11">1.21.11</option>
-                <option value="1.21.10">1.21.10</option>
-                <option value="1.21.8">1.21.8</option>
-            </select>
+      <label>Search Minecraft Version</label>
+      <input
+        type="search"
+        id="versionSearch"
+        placeholder="Search: 1.21.11..."
+      >
 
-            <label>Server Software</label>
+      <label>Minecraft Version</label>
+      <select id="minecraftVersion" required>
+        <option value="">Loading versions...</option>
+      </select>
 
-            <select id="software">
-                <option>Paper</option>
-                <option>Vanilla</option>
-                <option>Fabric</option>
-                <option>Purpur</option>
-            </select>
+      <p class="info" id="versionInfo">
+        Loading official Mojang version manifest...
+      </p>
 
-            <label>RAM Allocation</label>
+      <label>RAM</label>
+      <select id="ram">
+        <option value="1024">1 GB</option>
+        <option value="2048" selected>2 GB</option>
+        <option value="4096">4 GB</option>
+        <option value="6144">6 GB</option>
+        <option value="8192">8 GB</option>
+        <option value="12288">12 GB</option>
+        <option value="16384">16 GB</option>
+      </select>
 
-            <select id="ram">
-                <option value="1">1 GB</option>
-                <option value="2">2 GB</option>
-                <option value="4">4 GB</option>
-            </select>
+      <button type="submit" id="submitBtn">
+        Create Server Request
+      </button>
 
-            <label>Server Edition</label>
+      <p id="message"></p>
 
-            <select>
-                <option>Java Edition</option>
-            </select>
+    </form>
 
-            <button type="submit">
-                🚀 CREATE SERVER
-            </button>
+  </div>
 
-        </form>
-
-        <div id="result"></div>
-
-        <p class="note">
-            ⚠️ Preview Mode: This form does not create a
-            real Minecraft server yet. A hosting backend
-            is required for real server creation.
-        </p>
-
-    </div>
+  <a class="back" href="dashboard.html">← Back to Dashboard</a>
 
 </div>
 
-<footer>
-    🌊 SETALI-HOSING 🧊<br>
-    Premium Minecraft Hosting
-</footer>
+<script type="module">
+import { supabase } from "./js/supabase-config.js";
 
-<script>
+const MANIFEST_URL =
+  "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json";
+
+const versionType = document.getElementById("versionType");
+const versionSelect = document.getElementById("minecraftVersion");
+const versionSearch = document.getElementById("versionSearch");
+const versionInfo = document.getElementById("versionInfo");
+const message = document.getElementById("message");
+const submitBtn = document.getElementById("submitBtn");
+
+let versions = [];
+let latestRelease = "";
+
+async function checkLogin() {
+  const { data, error } = await supabase.auth.getSession();
+
+  if (error || !data.session) {
+    window.location.href = "login.html";
+    return false;
+  }
+
+  return true;
+}
+
+async function loadVersions() {
+  try {
+    versionInfo.textContent = "Connecting to Mojang...";
+
+    const response = await fetch(MANIFEST_URL);
+
+    if (!response.ok) {
+      throw new Error("Could not load Mojang version manifest.");
+    }
+
+    const manifest = await response.json();
+
+    versions = manifest.versions || [];
+    latestRelease = manifest.latest?.release || "";
+
+    renderVersions();
+
+  } catch (error) {
+    versionSelect.innerHTML =
+      '<option value="">Unable to load versions</option>';
+
+    versionInfo.textContent =
+      "Version loading failed. Please refresh the page.";
+
+    console.error(error);
+  }
+}
+
+function renderVersions() {
+  const type = versionType.value;
+  const search = versionSearch.value.trim().toLowerCase();
+
+  let filtered = versions.filter(version => {
+    const matchesType =
+      type === "all" || version.type === type;
+
+    const matchesSearch =
+      version.id.toLowerCase().includes(search);
+
+    return matchesType && matchesSearch;
+  });
+
+  versionSelect.innerHTML = "";
+
+  if (filtered.length === 0) {
+    versionSelect.innerHTML =
+      '<option value="">No versions found</option>';
+
+    versionInfo.textContent = "No matching Minecraft versions.";
+    return;
+  }
+
+  filtered.forEach(version => {
+    const option = document.createElement("option");
+
+    option.value = version.id;
+    option.textContent =
+      version.id +
+      (version.id === latestRelease ? " (Latest)" : "");
+
+    versionSelect.appendChild(option);
+  });
+
+  if (filtered.some(v => v.id === latestRelease)) {
+    versionSelect.value = latestRelease;
+  }
+
+  versionInfo.textContent =
+    filtered.length + " versions found. Latest release: " +
+    latestRelease;
+}
+
+versionType.addEventListener("change", renderVersions);
+versionSearch.addEventListener("input", renderVersions);
 
 document.getElementById("serverForm")
-.addEventListener("submit", function(e) {
+.addEventListener("submit", async (event) => {
 
-    e.preventDefault();
+  event.preventDefault();
 
-    const name = document.getElementById("serverName").value;
-    const version = document.getElementById("version").value;
-    const software = document.getElementById("software").value;
-    const ram = document.getElementById("ram").value;
+  message.textContent = "";
+  message.className = "";
 
-    const result = document.getElementById("result");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting...";
 
-    result.style.display = "block";
+  try {
+    const { data, error: authError } =
+      await supabase.auth.getUser();
 
-    result.innerHTML = `
-        <h3>❄ Server Configuration Saved (DEMO)</h3>
-        <p>Server Name: ${escapeHTML(name)}</p>
-        <p>Version: ${version}</p>
-        <p>Software: ${software}</p>
-        <p>RAM: ${ram} GB</p>
-        <br>
-        <strong style="color:#50caff">
-        Waiting for Hosting Backend...
-        </strong>
-    `;
+    if (authError || !data.user) {
+      throw new Error("Please login first.");
+    }
 
+    const serverName =
+      document.getElementById("serverName").value.trim();
+
+    const software =
+      document.getElementById("software").value;
+
+    const minecraftVersion =
+      versionSelect.value;
+
+    const ram =
+      Number(document.getElementById("ram").value);
+
+    if (!minecraftVersion) {
+      throw new Error("Please select a Minecraft version.");
+    }
+
+    const { error } = await supabase
+      .from("server_requests")
+      .insert({
+        user_id: data.user.id,
+        server_name: serverName,
+        minecraft_version: minecraftVersion,
+        software: software,
+        ram_mb: ram
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    message.className = "success";
+
+    message.textContent =
+      "Success! Your server request has been submitted. " +
+      "Please wait for administrator approval.";
+
+    document.getElementById("serverForm").reset();
+
+    versionType.value = "release";
+    versionSearch.value = "";
+    renderVersions();
+
+  } catch (error) {
+    message.className = "error";
+    message.textContent = error.message;
+  }
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = "Create Server Request";
 });
 
-function escapeHTML(text) {
-    return text.replace(/[&<>"']/g, function(char) {
-        return {
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;"
-        }[char];
-    });
-}
+await checkLogin();
+loadVersions();
 
 </script>
 
