@@ -1,0 +1,1 @@
+// SETALI-HOSING Supabase Configuration
